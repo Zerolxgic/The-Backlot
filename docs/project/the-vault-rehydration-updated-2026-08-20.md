@@ -13,16 +13,46 @@ If this rehydration summary and the canonical specification ever differ on kv-v0
 canonical specification wins. This document should be updated as implementation decisions  
 and project state change.
 
+Public Project / Repository Identity
+
+Public project and GitHub repository identity: **The Backlot**.
+
+Public description: a research and development project — Knowledge Vault.
+
+This is a project/repository identity, not a schema or technical namespace rename. The following
+technical names remain unchanged:
+
+```text
+Knowledge system: Knowledge Vault
+Local development repository: D:\Project-Playground\the-vault
+Python package: kv_tools
+CLI: kv
+Schema identifier: kv-v0
+```
+
+The GitHub repository for The Backlot has been created but is not yet connected as the remote
+for the local `the-vault` repository. Cursor Origin linking is planned after the repository connection
+is established.
+
+Do not rewrite historical design or Slice 1 records merely to replace "The Vault" with
+"The Backlot". Existing historical names remain historically true.
+
 Current State
 
 kv-v0 design: ACCEPTED.
 Implementation architecture: Decisions 1--8 LOCKED.
 Slice 1 implementation: ACCEPTED at `678d6880886e38410801b64c85f4ff885d8cb033`.
+Slice 1 closeout documentation: `4bcab239b73d76a00b05101f162d04ba6a40b090`.
 Slice 1 independent remediation re-audit: PASS.
 Slice 1: CLOSED.
 Full Builder suite at closeout: 12 passed, 0 failed, 0 skipped.
+Public GitHub repository identity: The Backlot.
+GitHub remote connection from the local repository: NOT YET ESTABLISHED.
 Private operator vault: NOT INITIALIZED.
 Slice 2: not scoped or authorized.
+Current decision in front of the operator: define the operationalization path from the accepted
+public tooling foundation to the first functioning private Knowledge Vault. No implementation
+authority follows from that decision until explicitly granted.
 
 Current Implemented Capability
 
@@ -36,6 +66,12 @@ Canonical truth remains Markdown/YAML. Public tooling and the private vault rema
 Carry-forward Constraints
 
 Slice 1 is historically closed and must not be casually reopened. Defects discovered later require a new bounded remediation or follow-up slice. Private-vault initialization remains a separate operator-authorized action and must not occur merely because Slice 1 is closed. Future implementation must read `AGENTS.md`, the canonical specification, this rehydration record, and applicable project records before acting.
+
+Decision 7 remains binding: the public system and private operator vault are independent Git
+repositories, and private installations consume explicit public releases rather than arbitrary
+development commits. Connecting The Backlot to GitHub, establishing an explicit release, and
+initializing the private vault are operationalization steps; none should silently collapse into a
+schema change or Slice 1 rewrite.
 
 Process-Report Convention
 
@@ -497,7 +533,19 @@ app.
 
 Implementation Slice 1 -- Bootstrap + Structural Validator
 
-STATUS: DESIGNED / BOUNDED. NOT YET IMPLEMENTED.
+STATUS: ACCEPTED / CLOSED.
+
+Accepted implementation commit: `678d6880886e38410801b64c85f4ff885d8cb033`.
+
+Closeout documentation commit: `4bcab239b73d76a00b05101f162d04ba6a40b090`.
+
+Independent remediation re-audit: PASS.
+
+Final Builder suite at closeout: 12 passed, 0 failed, 0 skipped.
+
+The objective, required capabilities, exclusions, authority boundary, acceptance gate, and
+definition of done below are retained as the historical Slice 1 contract. They describe what
+Slice 1 was required to deliver; they are not current implementation instructions.
 
 Objective
 
@@ -613,10 +661,13 @@ objects;
 
 ● human/operator explicitly accepts implementation.
 
-Do not initialize the real private vault until Slice 1 passes implementation review and explicit  
-operator authorization.
+This acceptance gate was satisfied on 2026-08-20 and the operator explicitly accepted Slice 1.
+That acceptance did **not** initialize or authorize automatic initialization of the real private vault.
+Private-vault initialization remains a separate operator-authorized action.
 
 Slice 1 Definition of Done
+
+STATUS: SATISFIED / HISTORICAL.
 
 Implementation Slice 1 is complete when the public Knowledge Vault repository contains a  
 tested Python/uv implementation of kv init and kv validate; the accepted kv-v0 design has been  
@@ -652,15 +703,40 @@ Next Chat -- Start Here
 
 Begin the next conversation from this state:
 
-"Rehydrate The Vault project from the Drive document 'The Vault -- Rehydration'. kv-v0 design  
-is accepted. Architecture Decisions 1--8 are locked. Implementation Slice 1 -- Bootstrap +  
-Structural Validator is bounded but not implemented. The next task is to create the bounded  
-Codex Builder prompt for Slice 1. Do not reopen the architecture unless prompt construction  
-exposes a genuine contradiction or missing prerequisite."
+"Rehydrate the Knowledge Vault project from `docs/project/the-vault-rehydration.md`. The public
+project/repository identity is The Backlot; the local development repository remains `the-vault`,
+and the technical namespaces remain `kv`, `kv_tools`, and `kv-v0`. kv-v0 design is accepted.
+Architecture Decisions 1--8 are locked. Slice 1 -- Bootstrap + Structural Validator is accepted
+and CLOSED. The accepted implementation commit is
+`678d6880886e38410801b64c85f4ff885d8cb033`, with closeout documentation at
+`4bcab239b73d76a00b05101f162d04ba6a40b090`. The private operator vault is NOT
+INITIALIZED. Slice 2 is not scoped or authorized.
 
-Expected workflow after the Builder prompt:  
-Builder execution -> inspect result -> independent audit/review -> fixes if necessary -> human  
-acceptance gate -> only then initialize the private vault.
+The current decision is how to operationalize the accepted public tooling into the first functioning
+private Knowledge Vault. Preserve Decision 7: public tooling and private canonical data remain
+independent repositories, and the private installation should consume an explicit public release
+rather than an arbitrary development commit. Do not begin Capture or other new feature
+implementation until that operationalization path is deliberately decided."
+
+Current operationalization questions, not yet locked:
+
+1. Connect the local public repository to the GitHub repository **The Backlot** and then to Cursor
+   Origin.
+2. Decide the first explicit public `kv-tools` release/version and release mechanics.
+3. Decide the independent private-vault repository location/name and whether it remains local-only
+   or uses a private remote.
+4. Install the explicit public release into the private environment.
+5. Explicitly authorize and run:
+   `kv init <private-path> --root-title "Personal R&D Infrastructure"`
+6. Validate the fresh private vault and inspect its three bootstrap objects.
+7. Only after the private bootstrap is working, scope the first live-knowledge workflow. The leading
+   candidate is a low-friction Capture slice, but Slice 2 has not yet been defined or authorized.
+
+Expected workflow:
+
+public repository connection -> explicit public release -> independent private repository ->
+operator-authorized private initialization -> private validation/inspection -> deliberate next-slice
+scoping for live knowledge intake.
 
 Important Continuity Notes
 
