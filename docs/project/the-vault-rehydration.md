@@ -30,9 +30,9 @@ CLI: kv
 Schema identifier: kv-v0
 ```
 
-The GitHub repository for The Backlot has been created but is not yet connected as the remote
-for the local `the-vault` repository. Cursor Origin linking is planned after the repository connection
-is established.
+The local public `the-vault` repository is connected to
+https://github.com/Zerolxgic/The-Backlot through `origin`. Local `main` tracks `origin/main`, and
+GitHub's default branch is `main`.
 
 Do not rewrite historical design or Slice 1 records merely to replace "The Vault" with
 "The Backlot". Existing historical names remain historically true.
@@ -47,12 +47,14 @@ Slice 1 independent remediation re-audit: PASS.
 Slice 1: CLOSED.
 Full Builder suite at closeout: 12 passed, 0 failed, 0 skipped.
 Public GitHub repository identity: The Backlot.
-GitHub remote connection from the local repository: NOT YET ESTABLISHED.
+Public GitHub repository: https://github.com/Zerolxgic/The-Backlot.
+GitHub remote connection from the local repository: ESTABLISHED (`origin`; local `main` tracks `origin/main`).
+GitHub default branch: `main`.
+First explicit public release: v0.1.0 release preparation is in progress; no release has been created.
 Private operator vault: NOT INITIALIZED.
 Slice 2: not scoped or authorized.
-Current decision in front of the operator: define the operationalization path from the accepted
-public tooling foundation to the first functioning private Knowledge Vault. No implementation
-authority follows from that decision until explicitly granted.
+Current decision in front of the operator: whether to authorize the first explicit public v0.1.0
+release after release preparation. No implementation or private-vault authority follows from that decision.
 
 Current Implemented Capability
 
@@ -69,7 +71,7 @@ Slice 1 is historically closed and must not be casually reopened. Defects discov
 
 Decision 7 remains binding: the public system and private operator vault are independent Git
 repositories, and private installations consume explicit public releases rather than arbitrary
-development commits. Connecting The Backlot to GitHub, establishing an explicit release, and
+development commits. The Backlot GitHub connection, preparing an explicit release, and
 initializing the private vault are operationalization steps; none should silently collapse into a
 schema change or Slice 1 rewrite.
 
@@ -709,20 +711,20 @@ and the technical namespaces remain `kv`, `kv_tools`, and `kv-v0`. kv-v0 design 
 Architecture Decisions 1--8 are locked. Slice 1 -- Bootstrap + Structural Validator is accepted
 and CLOSED. The accepted implementation commit is
 `678d6880886e38410801b64c85f4ff885d8cb033`, with closeout documentation at
-`4bcab239b73d76a00b05101f162d04ba6a40b090`. The private operator vault is NOT
-INITIALIZED. Slice 2 is not scoped or authorized.
+`4bcab239b73d76a00b05101f162d04ba6a40b090`. The public repository is connected at
+https://github.com/Zerolxgic/The-Backlot, local `main` tracks `origin/main`, and v0.1.0 release
+preparation is in progress but no release exists. The private operator vault is NOT INITIALIZED.
+Slice 2 is not scoped or authorized.
 
-The current decision is how to operationalize the accepted public tooling into the first functioning
-private Knowledge Vault. Preserve Decision 7: public tooling and private canonical data remain
-independent repositories, and the private installation should consume an explicit public release
-rather than an arbitrary development commit. Do not begin Capture or other new feature
-implementation until that operationalization path is deliberately decided."
+The current decision is whether to authorize the first explicit public v0.1.0 release after release
+preparation. Preserve Decision 7: public tooling and private canonical data remain independent
+repositories, and a future private installation should consume an explicit public release rather
+than an arbitrary development commit. Do not begin Capture or other new feature implementation."
 
 Current operationalization questions, not yet locked:
 
-1. Connect the local public repository to the GitHub repository **The Backlot** and then to Cursor
-   Origin.
-2. Decide the first explicit public `kv-tools` release/version and release mechanics.
+1. Authorize or defer the prepared first explicit public `knowledge-vault-tools` v0.1.0 release.
+2. If authorized, create the explicit release through a separately bounded release task.
 3. Decide the independent private-vault repository location/name and whether it remains local-only
    or uses a private remote.
 4. Install the explicit public release into the private environment.
@@ -734,7 +736,7 @@ Current operationalization questions, not yet locked:
 
 Expected workflow:
 
-public repository connection -> explicit public release -> independent private repository ->
+public repository connection -> release preparation -> explicit public release -> independent private repository ->
 operator-authorized private initialization -> private validation/inspection -> deliberate next-slice
 scoping for live knowledge intake.
 
