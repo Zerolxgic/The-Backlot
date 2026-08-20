@@ -1,0 +1,23 @@
+[project]
+name = "knowledge-vault-tools"
+version = "0.1.0"
+description = "Bootstrap and structural validation tooling for Knowledge Vault kv-v0."
+requires-python = ">=3.14,<3.15"
+dependencies = ["PyYAML>=6.0.2", "jsonschema>=4.25.0"]
+
+[project.scripts]
+kv = "kv_tools.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+
+[build-system]
+requires = ["uv_build>=0.8.0,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "kv_tools"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

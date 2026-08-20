@@ -1,0 +1,8 @@
+# Slice 1 implementation fixes exposed by required coverage
+
+1. Required negative structural tests showed that kind-inapplicable frontmatter fields and malformed evidence/relationship entries were accepted. The validator now emits `KV-METADATA-UNEXPECTED`, `KV-EVIDENCE-SHAPE`, and `KV-RELATIONSHIP-SHAPE`. This implements existing canonical kind-specific/controlled-vocabulary requirements; it adds no schema semantics.
+
+2. Required Tool coverage showed that `adopted`, `rejected`, and `retired` Tool states did not require authority. The validator now uses the existing `KV-AUTHORITY-REQUIRED` rule for those specified adoption states.
+
+
+3. Independent audit remediation found that `kv init` treated only conformance errors as staged-validation failure, so an execution diagnostic could permit publication. The initializer now blocks publication separately when validation has execution diagnostics, preserving the distinction from conformance failure. The report status now renders execution failure as `FAIL` while the CLI continues to return exit code `2` (rather than conformance-failure code `1`). `test_staged_execution_failure_does_not_publish` exercises the actual initializer publication gate with a deterministic validator-execution failure and verifies no destination or staging directory remains; `test_cli_statuses_and_exit_codes` covers successful, conformance-failure, and execution-failure status/exit behavior. The coverage matrix now cites the real staged-execution regression test instead of the nonexistent `test_failed_staging_does_not_publish`. These smallest changes restore the accepted invariant that initialization publishes only after normal, error-free validation.
