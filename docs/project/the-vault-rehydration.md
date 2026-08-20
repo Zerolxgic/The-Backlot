@@ -13,17 +13,39 @@ If this rehydration summary and the canonical specification ever differ on kv-v0
 canonical specification wins. This document should be updated as implementation decisions  
 and project state change.
 
-Current Status
+Current State
 
-kv-v0 design: DESIGN ACCEPTED.  
-Implementation architecture: Decisions 1--8 LOCKED.  
-Implementation status: NOT STARTED.  
-Private operator vault: NOT INITIALIZED.  
-Current next step: create the bounded Codex Builder prompt for Implementation Slice 1 --  
-Bootstrap + Structural Validator.
+kv-v0 design: ACCEPTED.
+Implementation architecture: Decisions 1--8 LOCKED.
+Slice 1 implementation: ACCEPTED at `678d6880886e38410801b64c85f4ff885d8cb033`.
+Slice 1 independent remediation re-audit: PASS.
+Slice 1: CLOSED.
+Full Builder suite at closeout: 12 passed, 0 failed, 0 skipped.
+Private operator vault: NOT INITIALIZED.
+Slice 2: not scoped or authorized.
 
-Do not reopen broad architecture by default. If implementation exposes a genuine contradiction  
-or missing prerequisite, stop only the affected work and bring the issue back for design review.
+Current Implemented Capability
+
+```text
+kv init <path> --root-title "<title>"
+kv validate <path>
+```
+
+Canonical truth remains Markdown/YAML. Public tooling and the private vault remain separate. Folder location is not semantic authority. Validation is read-only. `kv init` is creation-only and requires full staged validation before publication. Database, daemon, cache, graph, and embedding infrastructure remains absent and deferred.
+
+Carry-forward Constraints
+
+Slice 1 is historically closed and must not be casually reopened. Defects discovered later require a new bounded remediation or follow-up slice. Private-vault initialization remains a separate operator-authorized action and must not occur merely because Slice 1 is closed. Future implementation must read `AGENTS.md`, the canonical specification, this rehydration record, and applicable project records before acting.
+
+Process-Report Convention
+
+```text
+D:\Project-Playground\Vault-reports\Builder-reports
+D:\Project-Playground\Vault-reports\Auditor-reports
+D:\Project-Playground\Vault-reports\Scout-reports
+```
+
+Builder, Auditor, and Scout processes should write their final bounded-work reports as Markdown to the corresponding external directory. These reports are historical process evidence and do not override the canonical specification, repository state, or operator authority.
 
 Project Intent
 
