@@ -13,83 +13,16 @@ If this rehydration summary and the canonical specification ever differ on kv-v0
 canonical specification wins. This document should be updated as implementation decisions  
 and project state change.
 
-Public Project / Repository Identity
-
-Public project and GitHub repository identity: **The Backlot**.
-
-Public description: a research and development project — Knowledge Vault.
-
-This is a project/repository identity, not a schema or technical namespace rename. The following
-technical names remain unchanged:
-
-```text
-Knowledge system: Knowledge Vault
-Local development repository: D:\Project-Playground\the-vault
-Python package: kv_tools
-CLI: kv
-Schema identifier: kv-v0
-```
-
-The local public `the-vault` repository is connected to
-`https://github.com/Zerolxgic/The-Backlot` through `origin`. Local `main` tracks `origin/main`,
-and GitHub's default branch is `main`.
-
-The first explicit public tooling release is `knowledge-vault-tools v0.1.0`. Tool release
-versioning remains independent from the `kv-v0` schema identifier.
-
-Do not rewrite historical design or Slice 1 records merely to replace "The Vault" with
-"The Backlot". Existing historical names remain historically true.
-
 Current State
 
 kv-v0 design: ACCEPTED.
 Implementation architecture: Decisions 1--8 LOCKED.
 Slice 1 implementation: ACCEPTED at `678d6880886e38410801b64c85f4ff885d8cb033`.
-Slice 1 closeout documentation: `4bcab239b73d76a00b05101f162d04ba6a40b090`.
 Slice 1 independent remediation re-audit: PASS.
 Slice 1: CLOSED.
 Full Builder suite at closeout: 12 passed, 0 failed, 0 skipped.
-
-Public project/repository identity: The Backlot.
-Public GitHub repository: `https://github.com/Zerolxgic/The-Backlot`.
-Public branch: `main`, tracking `origin/main`.
-Release-prep commit: `a0110b500b6f97f9a6c4658899f2fe0394432dbf`
-(`chore: prepare v0.1.0 release`).
-First explicit public tooling release: `knowledge-vault-tools v0.1.0` — RELEASED.
-Release tag: `v0.1.0`.
-Release artifacts: wheel + source distribution.
-The released wheel was independently installed outside the source checkout and successfully
-used to run `kv init` and `kv validate`.
-
-Private operator-vault repository: INITIALIZED / OPERATIONAL.
-Private GitHub repository: `https://github.com/Zerolxgic/personal-rd-vault`.
-Private repository visibility: PRIVATE.
-Private branch: `main`.
-Local private-vault path: `D:\Knowledge-Vault\personal-rd-vault`.
-Private root Area: `Personal R&D Infrastructure`.
-Private bootstrap commit:
-`dcf8362d16b46f0ad55701ca2edd4a199d64dbad`
-(`chore: initialize private knowledge vault`).
-Private bootstrap validation: PASS — 0 errors, 0 warnings, 0 info.
-Private bootstrap contains exactly three canonical kv-v0 Markdown objects:
-- `00_index/home.md`
-- `20_areas/root.md`
-- `90_meta/kv-v0-schema.md`
-
-The ten required navigation directories are preserved in Git. Otherwise-empty required
-directories contain `.gitkeep` placeholders solely as repository infrastructure. `.gitkeep` is
-not a kv-v0 object, carries no semantic meaning, and does not count as canonical knowledge.
-"Empty" in the bootstrap contract means empty of canonical kv-v0 objects.
-
-Operationalization Gate: CLOSED.
-The public/private topology required by Decision 7 has been exercised successfully using an
-explicit public release rather than an arbitrary development checkout.
-
-No real operator knowledge beyond the required private bootstrap objects has entered the vault.
-Slice 2: NOT SCOPED / NOT AUTHORIZED.
-Current decision in front of the operator: deliberately scope the first live-knowledge workflow
-against the now-operational private vault. Low-friction Capture is the leading candidate, but it
-has not yet been accepted as Slice 2.
+Private operator vault: NOT INITIALIZED.
+Slice 2: not scoped or authorized.
 
 Current Implemented Capability
 
@@ -102,40 +35,7 @@ Canonical truth remains Markdown/YAML. Public tooling and the private vault rema
 
 Carry-forward Constraints
 
-Slice 1 is historically closed and must not be casually reopened. Defects discovered later
-require a new bounded remediation or follow-up slice. Future implementation must read
-`AGENTS.md`, the canonical specification, this rehydration record, and applicable project
-records before acting.
-
-Decision 7 is now operationally realized:
-
-- The Backlot is the independent public tooling/reference repository.
-- `personal-rd-vault` is the independent private canonical-data repository.
-- Their Git histories remain independent.
-- Installed released `kv` tooling is the operational interface between them.
-- Private use consumes explicit public releases, not arbitrary development commits.
-- A tooling update is not a schema migration.
-- No general private-to-public synchronization or sanitization pipeline is authorized.
-- If private use exposes a tooling defect, understand it privately, create the smallest synthetic
-  public reproducer, then fix and test the public system without copying private canonical
-  knowledge into The Backlot.
-
-Operationalization convention — Git preservation of empty navigation directories:
-
-Required navigation directories that contain no canonical objects may contain a `.gitkeep`
-placeholder solely so Git preserves the directory across clones. Such placeholders are ordinary
-repository infrastructure, are not kv-v0 objects, have no semantic or governance standing, and
-do not count against the bootstrap requirement of exactly three canonical objects. This
-convention does not change kv-v0.
-
-The operationalization gate is closed. Releasing v0.1.0, installing the release, initializing the
-private vault, validating it, adding Git-preservation placeholders, and committing/pushing the
-private bootstrap are historical completed steps. Do not repeat or rewrite those steps unless a
-new bounded task requires it.
-
-The private vault should remain deliberately sparse until a live-knowledge workflow is designed
-and explicitly authorized. Do not bulk-import existing notes, project records, Google Drive
-content, chat history, or other private knowledge by inference.
+Slice 1 is historically closed and must not be casually reopened. Defects discovered later require a new bounded remediation or follow-up slice. Private-vault initialization remains a separate operator-authorized action and must not occur merely because Slice 1 is closed. Future implementation must read `AGENTS.md`, the canonical specification, this rehydration record, and applicable project records before acting.
 
 Process-Report Convention
 
@@ -597,19 +497,7 @@ app.
 
 Implementation Slice 1 -- Bootstrap + Structural Validator
 
-STATUS: ACCEPTED / CLOSED.
-
-Accepted implementation commit: `678d6880886e38410801b64c85f4ff885d8cb033`.
-
-Closeout documentation commit: `4bcab239b73d76a00b05101f162d04ba6a40b090`.
-
-Independent remediation re-audit: PASS.
-
-Final Builder suite at closeout: 12 passed, 0 failed, 0 skipped.
-
-The objective, required capabilities, exclusions, authority boundary, acceptance gate, and
-definition of done below are retained as the historical Slice 1 contract. They describe what
-Slice 1 was required to deliver; they are not current implementation instructions.
+STATUS: DESIGNED / BOUNDED. NOT YET IMPLEMENTED.
 
 Objective
 
@@ -725,13 +613,10 @@ objects;
 
 ● human/operator explicitly accepts implementation.
 
-This acceptance gate was satisfied on 2026-08-20 and the operator explicitly accepted Slice 1.
-That acceptance did **not** initialize or authorize automatic initialization of the real private vault.
-Private-vault initialization remains a separate operator-authorized action.
+Do not initialize the real private vault until Slice 1 passes implementation review and explicit  
+operator authorization.
 
 Slice 1 Definition of Done
-
-STATUS: SATISFIED / HISTORICAL.
 
 Implementation Slice 1 is complete when the public Knowledge Vault repository contains a  
 tested Python/uv implementation of kv init and kv validate; the accepted kv-v0 design has been  
@@ -767,52 +652,15 @@ Next Chat -- Start Here
 
 Begin the next conversation from this state:
 
-"Rehydrate the Knowledge Vault project from `docs/project/the-vault-rehydration.md`.
-The public project/repository identity is The Backlot. The technical namespaces remain
-`kv`, `kv_tools`, and `kv-v0`. kv-v0 design is accepted. Architecture Decisions 1--8 are
-locked. Slice 1 -- Bootstrap + Structural Validator is accepted and CLOSED.
+"Rehydrate The Vault project from the Drive document 'The Vault -- Rehydration'. kv-v0 design  
+is accepted. Architecture Decisions 1--8 are locked. Implementation Slice 1 -- Bootstrap +  
+Structural Validator is bounded but not implemented. The next task is to create the bounded  
+Codex Builder prompt for Slice 1. Do not reopen the architecture unless prompt construction  
+exposes a genuine contradiction or missing prerequisite."
 
-The Backlot is connected to GitHub at `Zerolxgic/The-Backlot` and has an explicit public
-`knowledge-vault-tools v0.1.0` release. The released wheel was independently installed and
-used to create the real private vault.
-
-The private canonical repository is `Zerolxgic/personal-rd-vault`, is private and independent
-from The Backlot, and has local path `D:\Knowledge-Vault\personal-rd-vault`. Its root Area is
-`Personal R&D Infrastructure`. The private bootstrap commit is
-`dcf8362d16b46f0ad55701ca2edd4a199d64dbad`. `kv validate` passes with 0 errors,
-0 warnings, and 0 info. The vault contains exactly the three canonical bootstrap objects.
-Otherwise-empty required navigation directories use non-semantic `.gitkeep` placeholders for
-Git preservation.
-
-The Operationalization Gate is CLOSED. No real knowledge beyond bootstrap governance and
-orientation objects has entered the private vault. Slice 2 is NOT SCOPED or AUTHORIZED.
-
-The next task is design/scoping: determine the smallest trustworthy first live-knowledge
-workflow against the actual private vault. Low-friction Capture is the leading candidate, but do
-not assume `kv capture`, its interface, semantics, file placement, processing behavior, or Slice 2
-scope until those decisions are deliberately made."
-
-Current next-phase questions, not yet locked:
-
-1. Confirm whether low-friction Capture should be Slice 2 or whether live use exposes a more
-   fundamental prerequisite.
-2. Define the operator experience for capturing knowledge with minimal required input.
-3. Decide which metadata is generated deterministically and which, if any, must be supplied by
-   the operator.
-4. Decide default placement and scope behavior without allowing folder placement to become
-   semantic authority.
-5. Preserve raw operator meaning and uncertainty; Capture must not silently polish tentative
-   material into accepted knowledge.
-6. Decide the boundary between Capture creation and later classification/distillation/promotion.
-7. Define validation, failure, authority, and write-safety requirements for the first live write
-   workflow.
-8. Keep bulk migration/import, semantic search, embeddings, graph infrastructure, databases,
-   and UI work out of scope unless a genuine prerequisite is demonstrated.
-
-Expected workflow:
-
-real-vault usage question -> deliberate Slice 2 design -> bounded Builder prompt -> Builder
-execution -> independent audit -> remediation if required -> operator acceptance -> closeout.
+Expected workflow after the Builder prompt:  
+Builder execution -> inspect result -> independent audit/review -> fixes if necessary -> human  
+acceptance gate -> only then initialize the private vault.
 
 Important Continuity Notes
 
@@ -822,12 +670,10 @@ databases, or visual interfaces before Markdown/YAML canonical behavior proves t
 The public/private structure is specifically designed so the public project never needs private  
 data removed from it. The public system starts clean and stays clean; the private vault  
 consumes it downstream.  
-The private vault root is Personal R&D Infrastructure.
+The first private vault root is Personal R&D Infrastructure.
 
-The private vault is now initialized and should remain almost empty until a live-knowledge
-workflow is explicitly authorized: Root Area, kv-v0 Schema Meta, Home Index, and otherwise-empty
-navigation directories preserved by non-semantic `.gitkeep` files. Real knowledge enters only
-through deliberately designed workflows. Low-friction Capture is the leading next candidate,
-not an already-authorized feature.
+The first private vault should remain almost empty after initialization: Root Area, kv-v0 Schema  
+Meta, Home Index, and empty navigation directories. Real knowledge enters later through  
+explicitly designed workflows, starting with a future low-friction Capture slice.
 
 End of Rehydration
