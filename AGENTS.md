@@ -120,3 +120,12 @@ At completion, report:
 - and any adjacent opportunities discovered but not implemented.
 
 Do not describe work as accepted, closed, or complete beyond the lifecycle authority actually granted by the operator.
+
+## Cursor Cloud specific instructions
+
+This repository is `knowledge-vault-tools`: a single Python package (`kv_tools`) exposing the `kv` CLI (`init`, `validate`). There is no server, database, or web UI — the "application" is the CLI, and end-to-end testing means running the CLI and the pytest suite.
+
+- Package manager / runtime: `uv` (see `pyproject.toml`, `uv.lock`). The project requires Python 3.14; `uv` installs that toolchain automatically, so do not rely on the system `python3` (it is 3.12). `uv` is preinstalled at `~/.local/bin` and on PATH via `~/.profile`/`~/.bashrc`; the startup update script runs `uv sync`.
+- Run tests: `uv run pytest` (config in `pyproject.toml`; `testpaths = ["tests"]` is relative, so run from the repo root or the suite collects 0 tests).
+- Run the CLI: `uv run kv init <path> --root-title "<title>"` then `uv run kv validate <path>`. `validate` exit codes are meaningful: `0` = PASS, `1` = validation errors, `2` = execution diagnostics (e.g. missing path).
+- Linting: no linter (ruff/flake8/mypy/black) is configured; `pytest` is the only automated check. Do not add one unless the task authorizes it.
