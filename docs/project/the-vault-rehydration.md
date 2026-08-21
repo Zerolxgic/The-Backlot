@@ -86,10 +86,38 @@ The public/private topology required by Decision 7 has been exercised successful
 explicit public release rather than an arbitrary development checkout.
 
 No real operator knowledge beyond the required private bootstrap objects has entered the vault.
-Slice 2: NOT SCOPED / NOT AUTHORIZED.
-Current decision in front of the operator: deliberately scope the first live-knowledge workflow
-against the now-operational private vault. Low-friction Capture is the leading candidate, but it
-has not yet been accepted as Slice 2.
+
+Slice 2 — Low-Friction Capture: CONTRACT ACCEPTED / IMPLEMENTATION NOT AUTHORIZED.
+Capture Decisions 1–18 are LOCKED. The final end-to-end contract review passed with three
+non-architectural clarifications incorporated: routing precedence is short-circuiting; absence of
+a configured default Vault is a valid/idempotent config state; and storage-required normalization
+is restricted to mechanical serialization that preserves textual content.
+
+Accepted Slice 2 primary operator command:
+
+```text
+kv capture --text "<content>"
+```
+
+Standard input is the alternate content channel. Optional Capture arguments are `--title`,
+`--scope <kv-ID>`, and `--vault <path>`. Machine-local default-Vault configuration is TOML
+(`config.toml`) and remains noncanonical operational routing state.
+
+Slice 2 ends at safe preservation. Classification, enrichment, source ingestion, project routing,
+acceptance, downstream processing, agent-authored/mixed-provenance intake, Git automation,
+distributed locking, databases, embeddings, and broader editing remain outside this slice.
+
+Documentation Synchronization Gate: ACCEPTED.
+Documentation synchronization Builder task: COMPLETE.
+Independent documentation audit: PASS WITH MINOR FINDINGS. The audit's MINOR-1 wording issue was
+non-blocking and is corrected in this lifecycle record.
+Operator acceptance of the Documentation Synchronization Gate: GIVEN.
+
+The accepted Slice 2 contract remains accepted; Slice 2 feature implementation remains NOT AUTHORIZED.
+A separate explicit operator authorization for the Builder to implement Slice 2 remains required.
+
+Current decision in front of the operator: review the completed documentation-only synchronization
+result and only then prepare the Slice 2 Builder implementation prompt.
 
 Current Implemented Capability
 
@@ -101,6 +129,11 @@ kv validate <path>
 Canonical truth remains Markdown/YAML. Public tooling and the private vault remain separate. Folder location is not semantic authority. Validation is read-only. `kv init` is creation-only and requires full staged validation before publication. Database, daemon, cache, graph, and embedding infrastructure remains absent and deferred.
 
 Carry-forward Constraints
+
+The accepted Slice 2 contract is the bounded implementation contract for Low-Friction Capture.
+Its acceptance establishes scope but does not authorize feature implementation. The repository
+documentation synchronization gate must occur first, followed by separate explicit implementation
+authorization.
 
 Slice 1 is historically closed and must not be casually reopened. Defects discovered later
 require a new bounded remediation or follow-up slice. Future implementation must read
@@ -335,7 +368,7 @@ paralysis;
 governance standing by inference.  
 Known intentionally deferred areas include source freshness, source snapshots, repository  
 locator resolution, permission DSL, graph indexing, embeddings/search, migration tooling,  
-automated capture UX, visualization rendering, and advanced concurrency.
+richer automated capture UX beyond accepted Slice 2, visualization rendering, and advanced concurrency.
 
 Architecture Decisions
 
