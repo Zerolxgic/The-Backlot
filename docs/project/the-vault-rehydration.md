@@ -85,9 +85,11 @@ Operationalization Gate: CLOSED.
 The public/private topology required by Decision 7 has been exercised successfully using an
 explicit public release rather than an arbitrary development checkout.
 
-No real operator knowledge beyond the required private bootstrap objects has entered the vault.
+One limited, operator-authorized Slice 2 Capture is now present in the private vault. It was
+committed and pushed as `c70c160e94f66df29946136bc0e540c5fe53747f`
+(`Private vault commit-02.`). No bulk or inferred private-knowledge import is authorized.
 
-Slice 2 — Low-Friction Capture: CONTRACT ACCEPTED / IMPLEMENTATION NOT AUTHORIZED.
+Slice 2 — Low-Friction Capture: READY FOR OPERATOR CLOSURE.
 Capture Decisions 1–18 are LOCKED. The final end-to-end contract review passed with three
 non-architectural clarifications incorporated: routing precedence is short-circuiting; absence of
 a configured default Vault is a valid/idempotent config state; and storage-required normalization
@@ -107,33 +109,43 @@ Slice 2 ends at safe preservation. Classification, enrichment, source ingestion,
 acceptance, downstream processing, agent-authored/mixed-provenance intake, Git automation,
 distributed locking, databases, embeddings, and broader editing remain outside this slice.
 
-Documentation Synchronization Gate: ACCEPTED.
-Documentation synchronization Builder task: COMPLETE.
-Independent documentation audit: PASS WITH MINOR FINDINGS. The audit's MINOR-1 wording issue was
-non-blocking and is corrected in this lifecycle record.
-Operator acceptance of the Documentation Synchronization Gate: GIVEN.
+Slice 2 implementation: COMPLETE and explicitly operator-accepted.
+Accepted implementation commit: `4b93550c6efd0a9c4e62d9c86fb075a34bf9fe59`
+(`feat: implement slice 2 low-friction capture`), pushed on public `main`.
 
-The accepted Slice 2 contract remains accepted; Slice 2 feature implementation remains NOT AUTHORIZED.
-A separate explicit operator authorization for the Builder to implement Slice 2 remains required.
+The initial whole-slice audit found F1–F3; subsequent remediation/re-audit cycles discovered and
+resolved F4 and F5. Final independent verdict: PASS WITH MINOR FINDINGS, with F1–F5 all CLOSED,
+no CRITICAL, MAJOR, or MINOR findings, and one INFO observation only. Final independently verified
+suite: 58/58 passed (12 Slice 1, 46 Slice 2).
 
-Current decision in front of the operator: review the completed documentation-only synchronization
-result and only then prepare the Slice 2 Builder implementation prompt.
+The limited real private-Vault smoke test passed using the accepted implementation: baseline and
+post-Capture validation were both 0 errors, 0 warnings, and 0 info; exactly one operator-originated
+Capture was published; and no unrelated private canonical object changed. The Capture is committed
+and pushed in the private repository.
+
+The closeout record is [Slice 2 — Low-Friction Capture Closeout](slice-02-closeout.md).
+All technical, audit, acceptance, and operational prerequisites are satisfied, but Slice 2 is not
+closed: final status is **READY FOR OPERATOR CLOSURE** until the operator explicitly closes it.
 
 Current Implemented Capability
 
 ```text
 kv init <path> --root-title "<title>"
 kv validate <path>
+kv capture --text "<content>"
+kv config set-default-vault <path>
+kv config show
+kv config clear-default-vault
 ```
 
-Canonical truth remains Markdown/YAML. Public tooling and the private vault remain separate. Folder location is not semantic authority. Validation is read-only. `kv init` is creation-only and requires full staged validation before publication. Database, daemon, cache, graph, and embedding infrastructure remains absent and deferred.
+Canonical truth remains Markdown/YAML. Public tooling and the private vault remain separate. Folder location is not semantic authority. Validation is read-only. `kv init` is creation-only and requires full staged validation before publication. `kv capture` is bounded preservation only; it does not classify, promote, interpret, or otherwise process canonical knowledge. Database, daemon, cache, graph, and embedding infrastructure remains absent and deferred.
 
 Carry-forward Constraints
 
-The accepted Slice 2 contract is the bounded implementation contract for Low-Friction Capture.
-Its acceptance establishes scope but does not authorize feature implementation. The repository
-documentation synchronization gate must occur first, followed by separate explicit implementation
-authorization.
+The accepted Slice 2 contract remains the bounded implementation record for Low-Friction Capture.
+It does not authorize expansion beyond safe preservation. The current closure gate is operator-owned:
+do not declare Slice 2 closed, commit closeout documentation, or begin a later slice without separate
+operator authority.
 
 Slice 1 is historically closed and must not be casually reopened. Defects discovered later
 require a new bounded remediation or follow-up slice. Future implementation must read
@@ -166,9 +178,8 @@ private vault, validating it, adding Git-preservation placeholders, and committi
 private bootstrap are historical completed steps. Do not repeat or rewrite those steps unless a
 new bounded task requires it.
 
-The private vault should remain deliberately sparse until a live-knowledge workflow is designed
-and explicitly authorized. Do not bulk-import existing notes, project records, Google Drive
-content, chat history, or other private knowledge by inference.
+The private vault remains deliberately sparse. Do not bulk-import existing notes, project records,
+Google Drive content, chat history, or other private knowledge by inference.
 
 Process-Report Convention
 
@@ -813,39 +824,20 @@ The private canonical repository is `Zerolxgic/personal-rd-vault`, is private an
 from The Backlot, and has local path `D:\Knowledge-Vault\personal-rd-vault`. Its root Area is
 `Personal R&D Infrastructure`. The private bootstrap commit is
 `dcf8362d16b46f0ad55701ca2edd4a199d64dbad`. `kv validate` passes with 0 errors,
-0 warnings, and 0 info. The vault contains exactly the three canonical bootstrap objects.
-Otherwise-empty required navigation directories use non-semantic `.gitkeep` placeholders for
-Git preservation.
+0 warnings, and 0 info. The vault contains the three canonical bootstrap objects plus one
+operator-authorized Slice 2 Capture committed at
+`c70c160e94f66df29946136bc0e540c5fe53747f`. Otherwise-empty required navigation directories use
+non-semantic `.gitkeep` placeholders for Git preservation.
 
-The Operationalization Gate is CLOSED. No real knowledge beyond bootstrap governance and
-orientation objects has entered the private vault. Slice 2 is NOT SCOPED or AUTHORIZED.
+The Operationalization Gate is CLOSED. Slice 2 implementation is accepted, independently verified,
+and exercised once through the authorized private-Vault smoke test. The public implementation commit
+is `4b93550c6efd0a9c4e62d9c86fb075a34bf9fe59`; the private smoke-test Capture is committed at
+`c70c160e94f66df29946136bc0e540c5fe53747f`.
 
-The next task is design/scoping: determine the smallest trustworthy first live-knowledge
-workflow against the actual private vault. Low-friction Capture is the leading candidate, but do
-not assume `kv capture`, its interface, semantics, file placement, processing behavior, or Slice 2
-scope until those decisions are deliberately made."
-
-Current next-phase questions, not yet locked:
-
-1. Confirm whether low-friction Capture should be Slice 2 or whether live use exposes a more
-   fundamental prerequisite.
-2. Define the operator experience for capturing knowledge with minimal required input.
-3. Decide which metadata is generated deterministically and which, if any, must be supplied by
-   the operator.
-4. Decide default placement and scope behavior without allowing folder placement to become
-   semantic authority.
-5. Preserve raw operator meaning and uncertainty; Capture must not silently polish tentative
-   material into accepted knowledge.
-6. Decide the boundary between Capture creation and later classification/distillation/promotion.
-7. Define validation, failure, authority, and write-safety requirements for the first live write
-   workflow.
-8. Keep bulk migration/import, semantic search, embeddings, graph infrastructure, databases,
-   and UI work out of scope unless a genuine prerequisite is demonstrated.
-
-Expected workflow:
-
-real-vault usage question -> deliberate Slice 2 design -> bounded Builder prompt -> Builder
-execution -> independent audit -> remediation if required -> operator acceptance -> closeout.
+Slice 2 is **READY FOR OPERATOR CLOSURE**, not closed. Review
+`docs/project/slice-02-closeout.md` for the verified closeout basis. Do not make a final closure
+decision, commit/push closeout documentation, or start downstream work without separate operator
+authority."
 
 Important Continuity Notes
 
@@ -857,10 +849,11 @@ data removed from it. The public system starts clean and stays clean; the privat
 consumes it downstream.  
 The private vault root is Personal R&D Infrastructure.
 
-The private vault is now initialized and should remain almost empty until a live-knowledge
-workflow is explicitly authorized: Root Area, kv-v0 Schema Meta, Home Index, and otherwise-empty
-navigation directories preserved by non-semantic `.gitkeep` files. Real knowledge enters only
-through deliberately designed workflows. Low-friction Capture is the leading next candidate,
-not an already-authorized feature.
+The private vault remains deliberately sparse. In addition to the three bootstrap objects, it
+contains one operator-authorized Slice 2 Capture. Do not bulk-import existing notes, project
+records, Google Drive content, chat history, or other private knowledge by inference.
+
+Low-Friction Capture is now an accepted and implemented capability. Any workflow beyond safe
+Capture preservation requires separate bounded design and operator authorization.
 
 End of Rehydration
