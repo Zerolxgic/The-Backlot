@@ -8,7 +8,7 @@ from typing import Any, Iterable
 from jsonschema import Draft202012Validator
 
 from .filesystem import NAVIGATION_DIRECTORIES, discover_markdown
-from .models import ValidationReport, VaultObject
+from .models import ParsedDocument, ValidationReport, VaultObject
 from .parser import as_object, parse_markdown
 from .registry import ResolutionKind, VaultRegistry
 from .schema import canonical_json, instance_contract, supported_contract
@@ -48,7 +48,7 @@ def _cycle(report: ValidationReport, objects: Iterable[VaultObject], edges, rule
         report.add(rule, "ERROR", f"{name} contains a cycle.")
 
 
-def validate_vault(root: Path | str) -> ValidationReport:
+def validate_vault(root: Path | str, additional_documents: Iterable[ParsedDocument] = ()) -> ValidationReport:
     root = Path(root)
     report = ValidationReport()
     if not root.exists() or not root.is_dir():
@@ -58,7 +58,7 @@ def validate_vault(root: Path | str) -> ValidationReport:
         if not (root / name).is_dir(): report.add("KV-FS-DIRECTORY", "ERROR", f"Required navigation directory is missing: {name}.")
     paths, symlinks = discover_markdown(root)
     for path in symlinks: report.add("KV-FS-SYMLINK", "ERROR", "Canonical-object symlinks are not followed.", VaultObject(parse_markdown(path), {}))
-    documents = [parse_markdown(path) for path in paths]
+    documents = [parse_markdown(path) for path in paths] + list(additional_documents)
     objects: list[VaultObject] = []
     for document in documents:
         if document.diagnostics:

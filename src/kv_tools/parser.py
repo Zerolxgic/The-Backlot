@@ -8,8 +8,7 @@ import yaml
 from .models import ParseDiagnostic, ParsedDocument, VaultObject
 
 
-def parse_markdown(path: Path) -> ParsedDocument:
-    text = path.read_text(encoding="utf-8")
+def parse_markdown_text(path: Path, text: str) -> ParsedDocument:
     if not text.startswith("---"):
         return ParsedDocument(path, None, None, text, [ParseDiagnostic("Document does not begin with YAML frontmatter.")])
     lines = text.splitlines(keepends=True)
@@ -29,6 +28,10 @@ def parse_markdown(path: Path) -> ParsedDocument:
     if not isinstance(loaded, dict):
         return ParsedDocument(path, raw, None, body, [ParseDiagnostic("Frontmatter must be a YAML mapping.")])
     return ParsedDocument(path, raw, loaded, body)
+
+
+def parse_markdown(path: Path) -> ParsedDocument:
+    return parse_markdown_text(path, path.read_text(encoding="utf-8"))
 
 
 def as_object(document: ParsedDocument) -> VaultObject | None:
