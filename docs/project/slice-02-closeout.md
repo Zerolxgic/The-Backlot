@@ -2,9 +2,9 @@
 
 ## Status
 
-**READY FOR OPERATOR CLOSURE**
+**CLOSED**
 
-All verified prerequisites for closure are satisfied, but final closure remains an explicit operator decision. This record does not declare Slice 2 closed.
+All verified prerequisites were complete before final closure. On 2026-08-22, the operator explicitly accepted this closeout record and declared Slice 2 — Low-Friction Capture closed. Implementation acceptance occurred earlier; final closure occurred only through this explicit operator authority.
 
 ## Objective
 
@@ -40,7 +40,7 @@ Final independent evidence recorded **58 / 58 PASS**:
 
 ## Operator Acceptance
 
-The operator explicitly accepted the Slice 2 implementation after the final independent verification. That implementation acceptance is distinct from the final closure decision reserved to the operator.
+The operator explicitly accepted the Slice 2 implementation after the final independent verification. That implementation acceptance was distinct from the final closure decision, which the operator made explicitly on 2026-08-22.
 
 ## Real Private-Vault Operational Verification
 
@@ -62,12 +62,12 @@ Slice 2 did not implement classification, promotion, distillation, Source ingest
 
 ## Repository State
 
-Public repository `main` is at `4b93550c6efd0a9c4e62d9c86fb075a34bf9fe59`, which is the accepted implementation commit, and is pushed to `origin/main`.
+The accepted public implementation commit is `4b93550c6efd0a9c4e62d9c86fb075a34bf9fe59`, pushed to `origin/main`. Current public `main` also contains the pre-existing documentation-only commit `909de65627362da9b902501be60c5338c29520a1` (`rehydration documents update only`).
 
 Private repository `main` is at `c70c160e94f66df29946136bc0e540c5fe53747f`, the commit containing the smoke-test Capture, and is pushed to `origin/main`.
 
 ## Closure Gate
 
-All technical, audit, implementation-acceptance, and real-Vault operational prerequisites for Slice 2 closure are satisfied.
+All technical, audit, implementation-acceptance, and real-Vault operational prerequisites for Slice 2 closure were satisfied before the operator's closure decision.
 
-**Final status remains READY FOR OPERATOR CLOSURE until explicit operator closure is given.**
+On 2026-08-22, the operator explicitly accepted this closeout record and declared Slice 2 — Low-Friction Capture CLOSED. Historical Slice 2 records are now immutable. Any future correction, extension, or change to Capture behavior requires a new bounded slice.

@@ -89,7 +89,7 @@ One limited, operator-authorized Slice 2 Capture is now present in the private v
 committed and pushed as `c70c160e94f66df29946136bc0e540c5fe53747f`
 (`Private vault commit-02.`). No bulk or inferred private-knowledge import is authorized.
 
-Slice 2 — Low-Friction Capture: READY FOR OPERATOR CLOSURE.
+Slice 2 — Low-Friction Capture: CLOSED (operator closure: 2026-08-22).
 Capture Decisions 1–18 are LOCKED. The final end-to-end contract review passed with three
 non-architectural clarifications incorporated: routing precedence is short-circuiting; absence of
 a configured default Vault is a valid/idempotent config state; and storage-required normalization
@@ -124,8 +124,8 @@ Capture was published; and no unrelated private canonical object changed. The Ca
 and pushed in the private repository.
 
 The closeout record is [Slice 2 — Low-Friction Capture Closeout](slice-02-closeout.md).
-All technical, audit, acceptance, and operational prerequisites are satisfied, but Slice 2 is not
-closed: final status is **READY FOR OPERATOR CLOSURE** until the operator explicitly closes it.
+All technical, audit, acceptance, and operational prerequisites were satisfied before the operator
+explicitly accepted that record and declared Slice 2 closed on 2026-08-22.
 
 Current Implemented Capability
 
@@ -142,10 +142,10 @@ Canonical truth remains Markdown/YAML. Public tooling and the private vault rema
 
 Carry-forward Constraints
 
-The accepted Slice 2 contract remains the bounded implementation record for Low-Friction Capture.
-It does not authorize expansion beyond safe preservation. The current closure gate is operator-owned:
-do not declare Slice 2 closed, commit closeout documentation, or begin a later slice without separate
-operator authority.
+The accepted Slice 2 contract remains the bounded historical implementation record for Low-Friction
+Capture. Slice 2 was explicitly closed by the operator on 2026-08-22. Historical Slice 2 records
+are immutable; any correction, extension, or behavior change requires a new bounded slice and
+separate operator authorization.
 
 Slice 1 is historically closed and must not be casually reopened. Defects discovered later
 require a new bounded remediation or follow-up slice. Future implementation must read
@@ -834,10 +834,9 @@ and exercised once through the authorized private-Vault smoke test. The public i
 is `4b93550c6efd0a9c4e62d9c86fb075a34bf9fe59`; the private smoke-test Capture is committed at
 `c70c160e94f66df29946136bc0e540c5fe53747f`.
 
-Slice 2 is **READY FOR OPERATOR CLOSURE**, not closed. Review
-`docs/project/slice-02-closeout.md` for the verified closeout basis. Do not make a final closure
-decision, commit/push closeout documentation, or start downstream work without separate operator
-authority."
+Slice 2 is **CLOSED** by explicit operator decision on 2026-08-22. Review
+`docs/project/slice-02-closeout.md` for the verified closure record. Do not reopen Slice 2 or
+start downstream work without a separate bounded slice and operator authorization."
 
 Important Continuity Notes
 
