@@ -6,6 +6,7 @@ import sys
 from typing import Mapping, TextIO
 
 from .capture import CaptureExecutionError, CaptureRefusal, capture_text, verify_vault_target
+from .classification import classify_capture
 from .configuration import (
     ConfigurationError,
     ConfigurationExecutionError,
@@ -129,6 +130,19 @@ def main(
     capture.add_argument("--title", help="Optional single-line navigation title.")
     capture.add_argument("--scope", help="Optional permanent kv-UUIDv7 scope ID.")
     capture.add_argument("--vault", help="Explicit Vault path; takes precedence over KV_VAULT and config.")
+    classify = commands.add_parser(
+        "classify",
+        help="Classify one active Capture as one Resource; selection is operator-directed, not inferred.",
+        description=("Classify exactly one active Capture without evaluating, accepting/rejecting, rewriting its body, "
+                     "or splitting/merging objects. Classes and deterministic initial states: claim=unassessed, "
+                     "observation=recorded, practice=candidate, decision=proposed, concept=emerging, "
+                     "operating_knowledge=proposed, hypothesis=unresolved."),
+    )
+    classify.add_argument("id", help="Permanent kv-UUIDv7 ID of the active Capture.")
+    classify.add_argument("--class", dest="knowledge_class", required=True,
+                          choices=("claim", "observation", "practice", "decision", "concept", "operating_knowledge", "hypothesis"),
+                          help="Operator-selected Resource class; assigns its deterministic initial state without evaluation or acceptance.")
+    classify.add_argument("--vault", help="Explicit Vault path; takes precedence over KV_VAULT and config.")
     config = commands.add_parser("config", help="Manage the local noncanonical default Vault path.")
     config_commands = config.add_subparsers(dest="config_command", required=True)
     config_set = config_commands.add_parser("set-default-vault", help="Verify and set the local default Vault.")
@@ -163,6 +177,32 @@ def main(
         except (ConfigurationExecutionError, CaptureExecutionError) as exc:
             print(f"ERROR: {exc}", file=sys.stderr)
             return 2
+    if args.command == "classify":
+        try:
+            result = classify_capture(args.id, args.knowledge_class, vault=args.vault, environ=environ)
+        except CaptureRefusal as exc:
+            print(f"REFUSED: ID={args.id}; requested class={args.knowledge_class}; {exc}", file=sys.stderr)
+            if "No changes were made." not in str(exc):
+                print("No changes were made.", file=sys.stderr)
+            return 1
+        except CaptureExecutionError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            if exc.indeterminate:
+                print("Classification outcome: INCOMPLETE / INDETERMINATE. Do not blindly retry.", file=sys.stderr)
+            elif "PROVEN ROLLBACK" in str(exc):
+                print("Classification outcome: PROVEN ROLLBACK.", file=sys.stderr)
+            else:
+                print("Classification outcome: KNOWN NO-WRITE.", file=sys.stderr)
+            return 2
+        print(f"ID: {result.object_id}")
+        print(f"Class: {result.knowledge_class}")
+        print(f"Initial state: {result.knowledge_state}")
+        print(f"Path: {result.relative_path.as_posix()}")
+        if result.baseline_errors:
+            print(f"WARNING: Vault retains {len(result.baseline_errors)} pre-existing conformance error(s); run kv validate for detail.", file=sys.stderr)
+        for warning in result.warnings:
+            print(f"WARNING [{warning.rule_id}]: {warning.message}", file=sys.stderr)
+        return 0
     try:
         content = _capture_content(args.text, stdin or sys.stdin)
         result = capture_text(content, title=args.title, scope=args.scope, vault=args.vault, environ=environ)

@@ -53,13 +53,17 @@ Full Builder suite at closeout: 12 passed, 0 failed, 0 skipped.
 Public project/repository identity: The Backlot.
 Public GitHub repository: `https://github.com/Zerolxgic/The-Backlot`.
 Public branch: `main`, tracking `origin/main`.
-Release-prep commit: `a0110b500b6f97f9a6c4658899f2fe0394432dbf`
+v0.1.0 release-prep commit: `a0110b500b6f97f9a6c4658899f2fe0394432dbf`
 (`chore: prepare v0.1.0 release`).
 First explicit public tooling release: `knowledge-vault-tools v0.1.0` — RELEASED.
-Release tag: `v0.1.0`.
+v0.1.0 release tag: `v0.1.0`.
 Release artifacts: wheel + source distribution.
 The released wheel was independently installed outside the source checkout and successfully
 used to run `kv init` and `kv validate`.
+
+Current explicit public tooling release: `knowledge-vault-tools v0.2.0` — RELEASED.
+Release-prep commit: `72f71fc94e898fda2ddf391704c658776e248a23`.
+Annotated release tag: `v0.2.0`.
 
 Private operator-vault repository: INITIALIZED / OPERATIONAL.
 Private GitHub repository: `https://github.com/Zerolxgic/personal-rd-vault`.
@@ -127,6 +131,18 @@ The closeout record is [Slice 2 — Low-Friction Capture Closeout](slice-02-clos
 All technical, audit, acceptance, and operational prerequisites were satisfied before the operator
 explicitly accepted that record and declared Slice 2 closed on 2026-08-22.
 
+Slice 3 — Operator-Directed Capture → Resource Classification: the implementation candidate is
+**OPERATOR ACCEPTED**. The final bounded independent re-audit passed: 12 Slice 1, 46 Slice 2,
+and 38 Slice 3 tests passed (96 total; 0 failed, 0 skipped, 0 errors, 0 warnings). The candidate
+remains uncommitted at `72f71fc94e898fda2ddf391704c658776e248a23`; commit, push, formal Slice 3
+closure, release, and any private-Vault use remain separate pending operator actions.
+
+The accurate Slice 3 history is: Builder implementation → independent whole-slice audit FAIL →
+bounded remediation → F5 exhaustive proof → independent remediation re-audit FAIL on residual F6
+→ bounded F6/N1/F9 remediation → final bounded independent re-audit PASS → operator accepted.
+This was not a first-pass success. Final finding state: F1–F9 and F11 CLOSED; N1 CLOSED; F10
+DEFERRED. No blocking finding remains.
+
 Current Implemented Capability
 
 ```text
@@ -136,9 +152,25 @@ kv capture --text "<content>"
 kv config set-default-vault <path>
 kv config show
 kv config clear-default-vault
+kv classify <ID> --class <RESOURCE_CLASS> [--vault <PATH>]
 ```
 
-Canonical truth remains Markdown/YAML. Public tooling and the private vault remain separate. Folder location is not semantic authority. Validation is read-only. `kv init` is creation-only and requires full staged validation before publication. `kv capture` is bounded preservation only; it does not classify, promote, interpret, or otherwise process canonical knowledge. Database, daemon, cache, graph, and embedding infrastructure remains absent and deferred.
+Canonical truth remains Markdown/YAML. Public tooling and the private vault remain separate. Folder location is not semantic authority. Validation is read-only. `kv init` is creation-only and requires full staged validation before publication. `kv capture` is bounded preservation only; it does not classify, promote, interpret, or otherwise process canonical knowledge.
+
+`kv classify` is operator-directed: the operator explicitly chooses one of seven Resource classes and
+the tool assigns its deterministic initial state (`claim` → `unassessed`, `observation` → `recorded`,
+`practice` → `candidate`, `decision` → `proposed`, `concept` → `emerging`,
+`operating_knowledge` → `proposed`, `hypothesis` → `unresolved`). It preserves one continuing
+permanent identity, exact body bytes, valid shared metadata, and valid relationships; refuses
+invalid/prohibited metadata rather than laundering it; and does not evaluate, accept, split, or merge
+knowledge. Classification uses deterministic placement under `30_resources/`, the shared writer lock,
+prospective validation, and external-modification protection. Global duplicate IDs and target-critical
+failures block; unrelated pre-existing Vault errors may remain. Git conflict checking is optional,
+target-specific, and read-only: an unresolved target conflict blocks while unrelated conflicts, staged
+targets, dirty files, and untracked files do not. Execution truthfully distinguishes KNOWN NO-WRITE,
+PROVEN ROLLBACK, and INCOMPLETE / INDETERMINATE.
+
+Database, daemon, cache, graph, and embedding infrastructure remains absent and deferred.
 
 Carry-forward Constraints
 
@@ -151,6 +183,34 @@ Slice 1 is historically closed and must not be casually reopened. Defects discov
 require a new bounded remediation or follow-up slice. Future implementation must read
 `AGENTS.md`, the canonical specification, this rehydration record, and applicable project
 records before acting.
+
+Slice 3 is accepted but not closed. Its accepted contract is
+`docs/project/slice-03-capture-resource-classification-contract.md`. The next intended sequence is:
+
+1. operator reviews the repository diff;
+2. operator performs the commit;
+3. operator performs the push;
+4. operator completes the Slice 3 closeout and documented closure;
+5. any private-Vault exercise requires separate explicit authorization.
+
+### Slice 3 deferred work — F10
+
+**F10 — DEFERRED / UNRESOLVED.** Prospective classification validation currently creates a full
+temporary copy of the selected Vault in a sibling directory beneath the Vault parent using
+`TemporaryDirectory(..., dir=root.parent)` and `copytree(root, copy_root, symlinks=True)`. The
+temporary copy is outside the Vault root and broadly includes in-root files, including `.git` and
+unrelated files. Normal execution cleans it up; failure to prepare it is truthfully reported as
+KNOWN NO-WRITE. The Slice 3 remediation did not worsen this behavior, and it was non-blocking for
+Slice 3 acceptance. It is not resolved or waived: revisit the prospective-validation
+isolation/copy strategy only through a separately bounded design and implementation task.
+
+### Operational maintenance note
+
+The repository-local `.venv` / `.pytest_cache` has a pre-existing Windows access-denied /
+damaged-package-metadata condition that can make `uv run pytest` unreliable. The final independent
+audit used an isolated external environment and independently obtained the 96-pass result above.
+This is an environment-maintenance issue, not a Slice 3 correctness finding; do not repair it as part
+of Slice 3 documentation or closeout work without separate authority.
 
 Decision 7 is now operationally realized:
 
@@ -184,9 +244,9 @@ Google Drive content, chat history, or other private knowledge by inference.
 Process-Report Convention
 
 ```text
-D:\Project-Playground\Vault-reports\Builder-reports
-D:\Project-Playground\Vault-reports\Auditor-reports
-D:\Project-Playground\Vault-reports\Scout-reports
+D:\Project-Playground\the-vault-workspace\Vault-reports\Builder-reports
+D:\Project-Playground\the-vault-workspace\Vault-reports\Auditor-reports
+D:\Project-Playground\the-vault-workspace\Vault-reports\Scout-reports
 ```
 
 Builder, Auditor, and Scout processes should write their final bounded-work reports as Markdown to the corresponding external directory. These reports are historical process evidence and do not override the canonical specification, repository state, or operator authority.
@@ -816,9 +876,12 @@ The public project/repository identity is The Backlot. The technical namespaces 
 `kv`, `kv_tools`, and `kv-v0`. kv-v0 design is accepted. Architecture Decisions 1--8 are
 locked. Slice 1 -- Bootstrap + Structural Validator is accepted and CLOSED.
 
-The Backlot is connected to GitHub at `Zerolxgic/The-Backlot` and has an explicit public
-`knowledge-vault-tools v0.1.0` release. The released wheel was independently installed and
-used to create the real private vault.
+The Backlot is connected to GitHub at `Zerolxgic/The-Backlot`.
+The first explicit public tooling release was `knowledge-vault-tools v0.1.0`.
+The current explicit public tooling release is `knowledge-vault-tools v0.2.0`,
+tagged `v0.2.0` at release-prep commit
+`72f71fc94e898fda2ddf391704c658776e248a23`. The v0.1.0 released wheel was independently
+installed and used to create the real private vault.
 
 The private canonical repository is `Zerolxgic/personal-rd-vault`, is private and independent
 from The Backlot, and has local path `D:\Knowledge-Vault\personal-rd-vault`. Its root Area is
@@ -836,7 +899,13 @@ is `4b93550c6efd0a9c4e62d9c86fb075a34bf9fe59`; the private smoke-test Capture is
 
 Slice 2 is **CLOSED** by explicit operator decision on 2026-08-22. Review
 `docs/project/slice-02-closeout.md` for the verified closure record. Do not reopen Slice 2 or
-start downstream work without a separate bounded slice and operator authorization."
+start downstream work without a separate bounded slice and operator authorization.
+
+Slice 3 — Operator-Directed Capture → Resource Classification is **OPERATOR ACCEPTED** after a
+final bounded independent re-audit PASS (96/96). It is not yet committed, pushed, formally closed,
+released, or authorized for private-Vault use. Read the Slice 3 contract and this rehydration record;
+preserve F10 as DEFERRED / UNRESOLVED. The next operator actions are diff review, commit, push, and
+documented Slice 3 closure. Any private-Vault exercise needs separate explicit authorization."
 
 Important Continuity Notes
 
@@ -852,7 +921,8 @@ The private vault remains deliberately sparse. In addition to the three bootstra
 contains one operator-authorized Slice 2 Capture. Do not bulk-import existing notes, project
 records, Google Drive content, chat history, or other private knowledge by inference.
 
-Low-Friction Capture is now an accepted and implemented capability. Any workflow beyond safe
-Capture preservation requires separate bounded design and operator authorization.
+Low-Friction Capture and operator-directed Resource classification are accepted and implemented
+capabilities. Any further workflow beyond their accepted boundaries requires separate bounded design
+and operator authorization.
 
 End of Rehydration

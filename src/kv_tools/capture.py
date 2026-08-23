@@ -208,6 +208,14 @@ def _slug(title: str) -> str:
     return (normalized[:64].rstrip("-. ") or "capture")
 
 
+def navigation_filename(kind: str, title: str, object_id: str, *, extended_id: bool = False) -> str:
+    """Return the shared deterministic noncanonical navigation filename for a continuing object."""
+    fallback = "capture" if kind == "capture" else "resource"
+    slug = _slug(title) or fallback
+    identifier = object_id.removeprefix("kv-") if extended_id else object_id[-12:]
+    return f"{kind}-{slug}-{identifier}.md"
+
+
 def _render(metadata: dict[str, object], body: str) -> str:
     frontmatter = yaml.safe_dump(metadata, sort_keys=False, allow_unicode=True).rstrip("\n")
     return f"---\n{frontmatter}\n---\n{body}"
@@ -264,12 +272,14 @@ def _windows_process_liveness(process_id: int, lock_created: float | None) -> bo
 
 
 class _VaultWriteLock:
-    def __init__(self, root: Path, *, timeout_seconds: float = 5.0, stale_after_seconds: float = 300.0) -> None:
+    def __init__(self, root: Path, *, timeout_seconds: float = 5.0, stale_after_seconds: float = 300.0,
+                 operation: str = "Capture") -> None:
         self.path = root / _LOCK_NAME
         self.timeout_seconds = timeout_seconds
         self.stale_after_seconds = stale_after_seconds
         self.token = str(uuid.uuid4())
         self._owned = False
+        self.operation = operation
 
     def _lock_is_stale(self) -> bool:
         try:
@@ -325,11 +335,13 @@ class _VaultWriteLock:
                 if self._remove_stale_lock():
                     continue
                 if time.monotonic() >= deadline:
-                    raise CaptureRefusal("Another cooperating Knowledge Vault writer currently owns this Vault. No Capture was written.")
+                    raise CaptureRefusal(
+                        f"Another cooperating Knowledge Vault writer currently owns this Vault. No {self.operation} was written."
+                    )
                 time.sleep(0.05)
                 continue
             except OSError as exc:
-                raise CaptureExecutionError(f"Could not acquire Capture write ownership: {exc}") from exc
+                raise CaptureExecutionError(f"Could not acquire {self.operation} write ownership: {exc}") from exc
             try:
                 with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
                     json.dump({"pid": os.getpid(), "created": time.time(), "token": self.token}, handle)
@@ -340,7 +352,7 @@ class _VaultWriteLock:
                     self.path.unlink()
                 except OSError:
                     pass
-                raise CaptureExecutionError(f"Could not establish Capture write ownership: {exc}") from exc
+                raise CaptureExecutionError(f"Could not establish {self.operation} write ownership: {exc}") from exc
             self._owned = True
             return self
 
@@ -476,7 +488,7 @@ def capture_text(
         else:
             raise CaptureExecutionError("Could not generate an unused permanent Capture identity.")
         resolved_title = _title(content, title)
-        relative = Path("05_inbox") / f"capture-{_slug(resolved_title)}-{object_id[-12:]}.md"
+        relative = Path("05_inbox") / navigation_filename("capture", resolved_title, object_id)
         destination = root / relative
         metadata: dict[str, object] = {
             "schema": "kv-v0",

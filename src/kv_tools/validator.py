@@ -8,7 +8,7 @@ from typing import Any, Iterable
 from jsonschema import Draft202012Validator
 
 from .filesystem import NAVIGATION_DIRECTORIES, discover_markdown
-from .models import ParsedDocument, ValidationReport, VaultObject
+from .models import Finding, ParsedDocument, ValidationReport, VaultObject
 from .parser import as_object, parse_markdown
 from .registry import ResolutionKind, VaultRegistry
 from .schema import canonical_json, instance_contract, supported_contract
@@ -37,15 +37,18 @@ def _reference(report: ValidationReport, registry: VaultRegistry, obj: VaultObje
 
 def _cycle(report: ValidationReport, objects: Iterable[VaultObject], edges, rule: str, name: str) -> None:
     graph = {obj.id: [ref for ref in edges(obj) if isinstance(ref, str)] for obj in objects if obj.id}
-    seen: set[str] = set(); active: set[str] = set()
+    seen: set[str] = set(); active: list[str] = []; cycle_nodes: set[str] = set()
     def visit(node: str) -> bool:
-        if node in active: return True
+        if node in active:
+            cycle_nodes.update(active[active.index(node):]); return True
         if node in seen: return False
-        seen.add(node); active.add(node)
+        seen.add(node); active.append(node)
         found = any(visit(target) for target in graph.get(node, ()) if target in graph)
-        active.remove(node); return found
-    if any(visit(node) for node in graph):
-        report.add(rule, "ERROR", f"{name} contains a cycle.")
+        active.pop(); return found
+    for node in graph: visit(node)
+    for obj in objects:
+        if obj.id in cycle_nodes:
+            report.add(rule, "ERROR", f"{name} contains a cycle.", obj)
 
 
 def validate_vault(root: Path | str, additional_documents: Iterable[ParsedDocument] = ()) -> ValidationReport:
@@ -57,7 +60,8 @@ def validate_vault(root: Path | str, additional_documents: Iterable[ParsedDocume
     for name in NAVIGATION_DIRECTORIES:
         if not (root / name).is_dir(): report.add("KV-FS-DIRECTORY", "ERROR", f"Required navigation directory is missing: {name}.")
     paths, symlinks = discover_markdown(root)
-    for path in symlinks: report.add("KV-FS-SYMLINK", "ERROR", "Canonical-object symlinks are not followed.", VaultObject(parse_markdown(path), {}))
+    for path in symlinks:
+        report.findings.append(Finding("KV-FS-SYMLINK", "ERROR", "Canonical-object symlink is not followed.", path=path))
     documents = [parse_markdown(path) for path in paths] + list(additional_documents)
     objects: list[VaultObject] = []
     for document in documents:
