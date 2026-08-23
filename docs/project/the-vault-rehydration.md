@@ -131,17 +131,22 @@ The closeout record is [Slice 2 — Low-Friction Capture Closeout](slice-02-clos
 All technical, audit, acceptance, and operational prerequisites were satisfied before the operator
 explicitly accepted that record and declared Slice 2 closed on 2026-08-22.
 
-Slice 3 — Operator-Directed Capture → Resource Classification: the implementation candidate is
-**OPERATOR ACCEPTED**. The final bounded independent re-audit passed: 12 Slice 1, 46 Slice 2,
-and 38 Slice 3 tests passed (96 total; 0 failed, 0 skipped, 0 errors, 0 warnings). The candidate
-remains uncommitted at `72f71fc94e898fda2ddf391704c658776e248a23`; commit, push, formal Slice 3
-closure, release, and any private-Vault use remain separate pending operator actions.
+Slice 3 — Operator-Directed Capture → Resource Classification: **CLOSED**. The accepted
+implementation commit is `0f9fcef5069b63020f512f67d51e37c41951f0e4`
+(`feat: implement slice 3 capture classification`) on public `main`, pushed to `origin/main`.
+The final bounded independent re-audit passed: 12 Slice 1, 46 Slice 2, and 38 Slice 3 tests
+passed (96 total; 0 failed, 0 skipped, 0 errors, 0 warnings). See
+[Slice 3 — Operator-Directed Capture → Resource Classification Closeout](slice-03-closeout.md).
+
+The current published tooling release remains `knowledge-vault-tools v0.2.0`. The accepted Slice 3
+implementation commit is newer than that release baseline; this closeout does not publish or imply a
+new tooling release. Any future Slice 3-containing release remains separately authorized.
 
 The accurate Slice 3 history is: Builder implementation → independent whole-slice audit FAIL →
 bounded remediation → F5 exhaustive proof → independent remediation re-audit FAIL on residual F6
-→ bounded F6/N1/F9 remediation → final bounded independent re-audit PASS → operator accepted.
-This was not a first-pass success. Final finding state: F1–F9 and F11 CLOSED; N1 CLOSED; F10
-DEFERRED. No blocking finding remains.
+→ bounded F6/N1/F9 remediation → final bounded independent re-audit PASS → operator acceptance
+→ accepted implementation commit → push → closeout. This was not a first-pass success. Final
+finding state: F1–F9 and F11 CLOSED; N1 CLOSED; F10 DEFERRED / UNRESOLVED. No blocking finding remains.
 
 Current Implemented Capability
 
@@ -184,14 +189,11 @@ require a new bounded remediation or follow-up slice. Future implementation must
 `AGENTS.md`, the canonical specification, this rehydration record, and applicable project
 records before acting.
 
-Slice 3 is accepted but not closed. Its accepted contract is
-`docs/project/slice-03-capture-resource-classification-contract.md`. The next intended sequence is:
-
-1. operator reviews the repository diff;
-2. operator performs the commit;
-3. operator performs the push;
-4. operator completes the Slice 3 closeout and documented closure;
-5. any private-Vault exercise requires separate explicit authorization.
+Slice 3 is closed. Its accepted contract is
+`docs/project/slice-03-capture-resource-classification-contract.md`; its closure record is
+`docs/project/slice-03-closeout.md`. Any correction, extension, or new behavior requires a new
+separately bounded task. F10 remains DEFERRED / UNRESOLVED and must not be used to reopen Slice 3.
+Any private-Vault exercise remains separately authorized.
 
 ### Slice 3 deferred work — F10
 
@@ -901,11 +903,12 @@ Slice 2 is **CLOSED** by explicit operator decision on 2026-08-22. Review
 `docs/project/slice-02-closeout.md` for the verified closure record. Do not reopen Slice 2 or
 start downstream work without a separate bounded slice and operator authorization.
 
-Slice 3 — Operator-Directed Capture → Resource Classification is **OPERATOR ACCEPTED** after a
-final bounded independent re-audit PASS (96/96). It is not yet committed, pushed, formally closed,
-released, or authorized for private-Vault use. Read the Slice 3 contract and this rehydration record;
-preserve F10 as DEFERRED / UNRESOLVED. The next operator actions are diff review, commit, push, and
-documented Slice 3 closure. Any private-Vault exercise needs separate explicit authorization."
+Slice 3 — Operator-Directed Capture → Resource Classification is **CLOSED** after explicit operator
+acceptance, successful commit/push, and final independent re-audit PASS (96/96). The accepted
+implementation commit is `0f9fcef5069b63020f512f67d51e37c41951f0e4`; review
+`docs/project/slice-03-closeout.md`. F10 remains DEFERRED / UNRESOLVED and must be carried forward
+for separately bounded future work; do not reopen Slice 3 merely to address F10. Any private-Vault
+exercise or future tooling release remains separately authorized."
 
 Important Continuity Notes
 
